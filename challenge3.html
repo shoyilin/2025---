@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>挑戰三：分子模型與呼吸作用</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        input[type="radio"]:checked + label {
+            border-color: #2563eb;
+            background-color: #dbeafe;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            color: #1e3a8a;
+        }
+    </style>
+</head>
+<body class="bg-blue-50 min-h-screen flex flex-col items-center justify-center p-4">
+
+    
+    <h1 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-8 text-center">
+        挑戰三：觀察分子模型，<br class="sm:hidden">呼吸作用產出的二氧化碳，<br>其中的碳是哪一個原料提供。
+    </h1>
+
+    
+    <div class="bg-white p-8 sm:p-12 rounded-2xl shadow-lg max-w-4xl w-full">
+
+        
+        <div class="mb-8 flex flex-col items-center justify-center">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">分子模型示意圖：</h2>
+            
+            <!-- 原先的 葡萄糖 和 氧氣 圖片區塊已被移除 -->
+
+            <!-- 新增：單一圖片區塊 -->
+            <div class="w-full max-w-2xl bg-gray-50 rounded-lg shadow-sm p-4">
+                <!-- 使用 aspect-video 讓外框接近 16:9 (投影片) 比例 -->
+                <div class="w-full aspect-video flex items-center justify-center overflow-hidden">
+                    <img src="./molecules.png" alt="分子模型示意圖" class="max-h-full max-w-full object-contain">
+                </div>
+            </div>
+            
+            <!-- 原先的圖例 (碳、氫、氧) 已被移除 -->
+        </div>
+
+        <hr class="my-8">
+
+        
+        <div class="space-y-4">
+            <h2 class="text-xl font-semibold text-gray-700 text-center mb-6">請選擇正確的原料：</h2>
+            
+            
+            <div>
+                <input type="radio" name="carbon_source_option" id="option1" value="葡萄糖" class="sr-only">
+                <label for="option1" class="block w-full border-2 border-gray-200 rounded-lg p-5 text-lg font-semibold text-gray-700 cursor-pointer hover:border-blue-400 transition-all">
+                    葡萄糖
+                </label>
+            </div>
+
+            
+            <div>
+                <input type="radio" name="carbon_source_option" id="option2" value="氧氣" class="sr-only">
+                <label for="option2" class="block w-full border-2 border-gray-200 rounded-lg p-5 text-lg font-semibold text-gray-700 cursor-pointer hover:border-blue-400 transition-all">
+                    氧氣
+                </label>
+            </div>
+
+        </div>
+
+        
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <button id="reset-button" class="bg-yellow-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-yellow-600 transition-colors">
+                重設
+            </button>
+            <button id="check-button" class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 transition-colors">
+                檢查答案
+            </button>
+        </div>
+
+        <!-- 訊息提示框 -->
+        <div id="message-box" class="mt-6 text-center text-xl font-semibold hidden"></div>
+
+        
+        <!-- 導覽連結 (更新) -->
+        <div class="mt-12 flex justify-between items-center">
+            <a href="./index.html" class="text-gray-600 hover:text-gray-800 font-medium py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                &larr; 返回首頁
+            </a>
+            <span class="text-gray-500 font-medium py-2 px-4">（已是最後一個挑戰）</span>
+        </div>
+
+    </div> 
+
+<script>
+        const checkButton = document.getElementById('check-button');
+        const resetButton = document.getElementById('reset-button');
+        const messageBox = document.getElementById('message-box');
+        const radioButtons = document.querySelectorAll('input[name="carbon_source_option"]');
+
+        // 正確答案
+        const correctAnswer = "葡萄糖";
+
+        // 檢查答案
+        checkButton.addEventListener('click', () => {
+            const selectedOption = document.querySelector('input[name="carbon_source_option"]:checked');
+            
+            messageBox.classList.remove('hidden');
+
+            if (!selectedOption) {
+                // 沒有選擇
+                messageBox.textContent = '請先選擇一個答案！';
+                messageBox.classList.remove('text-green-600');
+                messageBox.classList.add('text-red-600');
+            } else if (selectedOption.value === correctAnswer) {
+                // 答案正確
+                messageBox.textContent = '恭喜你，答案完全正確！';
+                messageBox.classList.remove('text-red-600');
+                messageBox.classList.add('text-green-600');
+            } else {
+                // 答案錯誤
+                messageBox.textContent = '噢，答案有些錯誤，請再試一次！';
+                messageBox.classList.remove('text-green-600');
+                messageBox.classList.add('text-red-600');
+            }
+        });
+
+        // 重設
+        resetButton.addEventListener('click', () => {
+            radioButtons.forEach(radio => {
+                radio.checked = false;
+            });
+            messageBox.classList.add('hidden');
+            messageBox.textContent = '';
+        });
+    </script>
+</body>
+</html>

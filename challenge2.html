@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>挑戰二：酵母菌實驗</title>
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 使用 Inter 字體 */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* 當 radio 按鈕被選中時，其 label 的樣式 */
+        input[type="radio"]:checked + label {
+            border-color: #2563eb; /* blue-600 */
+            background-color: #dbeafe; /* blue-100 */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            color: #1e3a8a; /* blue-900 */
+        }
+    </style>
+</head>
+<body class="bg-blue-50 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- 標題 -->
+    <h1 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-8 text-center">
+        挑戰二：根據實驗，<br class="sm:hidden">酵母菌在甚麼條件下，<br>可產出較多的二氧化碳。
+    </h1>
+
+    <!-- 內容容器 -->
+    <div class="bg-white p-8 sm:p-12 rounded-2xl shadow-lg max-w-2xl w-full">
+
+        <!-- 選項區域 -->
+        <div class="space-y-4">
+            
+            <!-- 選項 1: 10%糖水 (正確答案) -->
+            <div>
+                <input type="radio" name="yeast_option" id="option1" value="10%" class="sr-only">
+                <label for="option1" class="block w-full border-2 border-gray-200 rounded-lg p-5 text-lg font-semibold text-gray-700 cursor-pointer hover:border-blue-400 transition-all">
+                    10%糖水
+                </label>
+            </div>
+
+            <!-- 選項 2: 5%糖水 -->
+            <div>
+                <input type="radio" name="yeast_option" id="option2" value="5%" class="sr-only">
+                <label for="option2" class="block w-full border-2 border-gray-200 rounded-lg p-5 text-lg font-semibold text-gray-700 cursor-pointer hover:border-blue-400 transition-all">
+                    5%糖水
+                </label>
+            </div>
+
+            <!-- 選項 3: 清水 -->
+            <div>
+                <input type="radio" name="yeast_option" id="option3" value="清水" class="sr-only">
+                <label for="option3" class="block w-full border-2 border-gray-200 rounded-lg p-5 text-lg font-semibold text-gray-700 cursor-pointer hover:border-blue-400 transition-all">
+                    清水
+                </label>
+            </div>
+
+        </div>
+
+        <!-- 按鈕區域 -->
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <button id="reset-button" class="bg-yellow-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-yellow-600 transition-colors">
+                重設
+            </button>
+            <button id="check-button" class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 transition-colors">
+                檢查答案
+            </button>
+        </div>
+
+        <!-- 訊息提示框 -->
+        <div id="message-box" class="mt-6 text-center text-xl font-semibold hidden"></div>
+
+        <!-- 導覽連結 (更新) -->
+        <div class="mt-12 flex justify-between items-center">
+            <a href="./index.html" class="text-gray-600 hover:text-gray-800 font-medium py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                &larr; 返回首頁
+            </a>
+            <a href="./challenge3.html" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors shadow-md">
+                前往下一個挑戰 &rarr;
+            </a>
+        </div>
+
+    </div> <!-- 內容容器結束 -->
+
+    <script>
+        const checkButton = document.getElementById('check-button');
+        const resetButton = document.getElementById('reset-button');
+        const messageBox = document.getElementById('message-box');
+        const radioButtons = document.querySelectorAll('input[name="yeast_option"]');
+
+        // 正確答案
+        const correctAnswer = "10%";
+
+        // 檢查答案
+        checkButton.addEventListener('click', () => {
+            const selectedOption = document.querySelector('input[name="yeast_option"]:checked');
+            
+            messageBox.classList.remove('hidden');
+
+            if (!selectedOption) {
+                // 沒有選擇
+                messageBox.textContent = '請先選擇一個答案！';
+                messageBox.classList.remove('text-green-600');
+                messageBox.classList.add('text-red-600');
+            } else if (selectedOption.value === correctAnswer) {
+                // 答案正確
+                messageBox.textContent = '恭喜你，答案完全正確！';
+                messageBox.classList.remove('text-red-600');
+                messageBox.classList.add('text-green-600');
+            } else {
+                // 答案錯誤
+                messageBox.textContent = '噢，答案有些錯誤，請再試一次！';
+                messageBox.classList.remove('text-green-600');
+                messageBox.classList.add('text-red-600');
+            }
+        });
+
+        // 重設
+        resetButton.addEventListener('click', () => {
+            radioButtons.forEach(radio => {
+                radio.checked = false;
+            });
+            messageBox.classList.add('hidden');
+            messageBox.textContent = '';
+        });
+    </script>
+</body>
+</html>
+
+
